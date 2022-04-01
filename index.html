@@ -1,46 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-13">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" 
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" 
-    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" 
+    integrity="sha3134-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" 
     crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Document</title>
+    <title>Weather Dashboard</title>
 </head>
 <body>
-    <header class="jumbotron jumbotron-fluid">
+    <header class="jumbotron jumbotron-fluid text-center">
         <div class="container">
-          <h1 class="display-4">Fluid jumbotron</h1>
-          <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+          <h1 class="display-4">Weather Dashboard</h1>          
         </div>
     </header>
-    <main class="container">        
+    <main class="container-fluid">        
         <section class="row">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+            <div id="search-container" class="col-4">
+                <h2>Search city</h2>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Enter city" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </div>
+                <div id="search-history">
+                    <ul class="list-group">
+                    <!-- Append search history list items here -->                        
+                      </ul>
                 </div>
             </div>
-            <div>
-                <h1>Display weather</h1>
+            <div id="display-weather-info" class="col-8">
+                <div class="row flex-column" id="display-city">
+                    <h1>Display weather</h1>
+                    <p>temp</p>
+                    <p>wind</p>
+                    <p>humidity</p>
+                    <p>uv index</p>
+                </div>
+                <div class="row col d-flex flex-row" id="display-5day">                       
+                    <div class="card" style="width: 13rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">future date</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">weather icon</h6>
+                            <p class="card-text">temp<br>wind<br>humidity<br></p>                          
+                        </div>
+                    </div>
+                    <div class="card" style="width: 13rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">future date</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">weather icon</h6>
+                          <p class="card-text">temp<br>wind<br>humidity<br></p>                          
+                        </div>
+                    </div>
+                    <div class="card" style="width: 13rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">future date</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">weather icon</h6>
+                            <p class="card-text">temp<br>wind<br>humidity<br></p>                          
+                        </div>
+                    </div>
+                    <div class="card" style="width: 13rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">future date</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">weather icon</h6>
+                            <p class="card-text">temp<br>wind<br>humidity<br></p>                          
+                        </div>
+                    </div>
+                    <div class="card" style="width: 13rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">future date</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">weather icon</h6>
+                            <p class="card-text">temp<br>wind<br>humidity<br></p>                          
+                        </div>
+                    </div>                    
+                </div>
             </div>
+            
             <!-- <div>
                 <h3>search history</h3>
                 <p>adding to see what happesn</p>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur quae, minus harum dignissimos ex numquam reiciendis natus tempora iusto obcaecati fugiat et nobis illum. Autem quos ipsa numquam dignissimos quia.</p>
-            </div> -->
-            </section>
+            </div> -->            
         </section>
-        <section class="row col-6">
-            <!-- <div>
-                <h1>Display weather</h1>
-            </div> -->
-        </section>
+        
+           
+        
     </main>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
