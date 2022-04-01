@@ -29,6 +29,7 @@
         * grap city via user search
         * display currentDay in main display
             * current.dt(date and time)
+                * change format?
             * current.temp
             * current.humidity
             * current.uvi

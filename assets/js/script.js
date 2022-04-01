@@ -1,17 +1,12 @@
 console.log('work')
 
-// var APIkey = "da68667857a166aac8fd5c7e112a3193"
-// var weather = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&appid="+ APIkey
-
 
 function getWeather() {
     var APIkey = "da68667857a166aac8fd5c7e112a3193"
     var city = $("#city-search").val();
-    var weather = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&appid="+ APIkey
+    var requestOne = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid="+ APIkey    
 
-    var city = $("#city-search").val();
-
-    fetch(weather)
+    fetch(requestOne)
     .then(function(response){
         return response.json();
     })
