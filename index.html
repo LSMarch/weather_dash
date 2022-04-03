@@ -17,29 +17,39 @@
           <h1 class="display-4">Weather Dashboard</h1>          
         </div>
     </header>
-    <main class="container-fluid">        
-        <section class="row">
-            <div id="search-container" class="col-4">
+    <div class="row container-fluid">        
+        <aside>
+            <div id="search-container" class="col">
                 <h2>Search city</h2>
-                <div class="input-group mb-3">
-                    <input id="city-search" type="text" class="form-control" placeholder="Enter city" aria-label="search" aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                        <button id="search-button" class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-                    </div>
-                </div>
+                <form>
+                    <div class="form-row">
+                      <div class="col-7">
+                        <input id="city-search" type="text" class="form-control" placeholder="City">
+                      </div>
+                      <!-- <div class="col">
+                        <input id="state-search" type="text" class="form-control" placeholder="State">
+                      </div> -->
+                      <!-- <div class="col">
+                        <input type="text" class="form-control" placeholder="Zip">
+                      </div>
+                    </div> -->
+                  </form>
+                    <button id="search-button" type="button" class="btn btn-secondary">Search</button>
                 <div id="search-history">
                     <ul class="list-group">
                     <!-- Append search history list items here -->                        
                       </ul>
                 </div>
             </div>
+        </aside>
+        <main>
             <div id="display-weather-info" class="col-8">
                 
                 <div class="row col d-flex flex-row" id="display-5day">                     
                     
                 </div>
             </div>
-            
+        </main>   
             <!-- <div>
                 <h3>search history</h3>
                 <p>adding to see what happesn</p>
@@ -49,7 +59,7 @@
         
            
         
-    </main>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
