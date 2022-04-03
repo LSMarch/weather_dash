@@ -1,32 +1,7 @@
 console.log('work')
 
-// var geoAPIkey //= "58e0ffc4029d6627d5281bd568bd2b8b"
-// var city //= $("#city-search").val();
-// var state //= $("#state-search").val();
-// var requestGeo  //"https://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + state +"&appid="+ geoAPIkey 
-// var lat
-// var lon
-
-// function getGeo (){
-//     var geoAPIkey = "58e0ffc4029d6627d5281bd568bd2b8b"
-//     var requestGeo = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + state +"&appid="+ geoAPIkey 
-//     var city =$("#city-search").val();
-//     var state =$("#state-search").val();
- 
-// fetch(requestGeo)
-// .then(function(response){
-//     return response.json();
-// })
-// .then(function(geo){
-//     console.log(geo)
-//     var lat = [0].lat
-//     var lon = [0].lon
-//     console.log(lat)
-//     console.log(lon)
-// })
-
-// }
-
+// var term = $("#city-search").val();
+// var search = $("#searched")
 
 function getWeather() {
     var APIkey = "58e0ffc4029d6627d5281bd568bd2b8b"
@@ -40,7 +15,7 @@ function getWeather() {
         return response.json();
     })
     .then(function(data){
-        //console.log(data)
+        
 
         //=== Formating date ===
 
@@ -50,22 +25,12 @@ function getWeather() {
     
 
         // === Main display ===
-    //var oneCallApi = "107f35b69ac4de4e432adda92e340f58"
+    
     var displayEl = $("#display-weather-info")
-    var cityEl = $("<h1 id='big-city'>")
-    // var dateEl = $("<span id='current-date'>")
-    // var displayTemp = $("<p id='display-temp'>")
-    // var displayWind = $("<p id='display-wind'>")
-    // var displayHumid = $("<p id='display-humid'>")
-    // var displayUvi = $("<p id='display-uvi'>")
-    // var displayIcon = $("<img id='display-icon'>")
-    // var displayIconUrl = "http://openweathermap.org/img/wn/"+currentIcon+".png"
-    // var currentIcon = data.weather[0].icon
-    // var iconAlt = data.weather[0].description
+    var cityEl = $("<h1 id='big-city'>")   
     var lat = data.coord.lat
     var lon = data.coord.lon
     var oneCallURL = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIkey
-
     cityEl.text(data.name)
     displayEl.append(cityEl)
 
@@ -80,18 +45,19 @@ function getWeather() {
     var displayTemp = $("<p id='display-temp'>")
     var displayWind = $("<p id='display-wind'>")
     var displayHumid = $("<p id='display-humid'>")
-    var displayUvi = $("<p id='display-uvi'>")
-    var displayIcon = $("<img id='display-icon'>")
+    var displayUvi = $("<span id='display-uvi'>")
+    var displayIcon = $("<img id='display-icon' src='' alt=''>")
     var displayIconUrl = "http://openweathermap.org/img/wn/"+currentIcon+".png"
     var currentIcon = data.current.weather[0].icon
     var iconAlt = data.current.weather[0].description
     var uvIndex = data.current.uvi
 
+    displayEl.addClass('custom-display')
     dateEl.text(" " +now)
     cityEl.append(dateEl)
 
     displayIcon.attr('src', displayIconUrl)
-    displayIcon.attr('alt', iconAlt)
+    //displayIcon.attr('alt', iconAlt)
     cityEl.append(displayIcon)    
 
     displayTemp.text("Temp: "+data.current.temp + " F")
@@ -114,86 +80,67 @@ function getWeather() {
     displayUvi.text("UV Index: "+ uvIndex)
     displayEl.append(displayUvi)
 
-    for( var i = 0; )
+    for(var i=0; i< 5; i++) {
 
-        
-    })    
+    // === Display 5 Day Forcast === 
+    var cardIcon = $("<img id='weather-icon' src='' alt='Weather Icon'>")    
+    var display5 = $("#display-5day")
+    var cardEl = $("<div class='card m-2 custom-card' style='width:13rem;'>")
+    var cardDate = $("<h5 id='card-title' class='card-title'>")    
+    var cardTemp = $("<p id='card-temp' class='card-text'>")
+    var cardWind = $("<p id='card-wind' class='card-text'>")
+    var cardHumid =$("<p id='card-humid' class='card-text'>")
+    var cardBody = $("<div id='card-body' class='card-body'>")
+    var dataIcon = data.daily[i].weather[0].icon
+    var iconUrl = "http://openweathermap.org/img/wn/"+dataIcon+".png"
 
-    // cityEl.text(data.name)
-    // displayEl.append(cityEl)
+    var dailyDate = data.daily[i].dt
+    var Date = moment(dailyDate).format("MM/DD/YYYY")
 
-    // dateEl.text(now)
-    // displayEl.append(dateEl)
+    cardIcon.attr('src', iconUrl)
+    cardBody.append(cardIcon)
 
-    // displayIcon.attr('src', displayIconUrl)
-    // displayIcon.attr('alt', iconAlt)
-    // displayEl.append(displayIcon)    
+    cardDate.text(Date)
+    cardBody.append(cardDate)
 
-    // displayTemp.text(data.main.temp + " F")
-    // displayEl.append(displayTemp)
+    cardBody.append(cardIcon)
 
-    // displayWind.text(data.wind.speed + " mph")
-    // displayEl.append(displayWind)
+    cardTemp.text("Temp: "+data.daily[i].temp.max)
+    cardBody.append(cardTemp)
 
-    // displayHumid.text(data.main.humidity + "%")
-    // displayEl.append(displayHumid)
+    cardHumid.text("Humidity: "+data.daily[i].humidity)
+    cardBody.append(cardHumid)
 
-    // displayUvi.text(data.current.uvi)
-    // displayEl.append(displayUvi)
+    cardWind.text("Wind: "+data.daily[i].wind_speed)
+    cardBody.append(cardWind)    
 
+    cardEl.append(cardBody)
+    display5.append(cardEl) 
+} //end for-loop
+
+}) // end oneCallURL       
+
+}) // end requestOne
+
+} // end getWeather()
+
+
+$("#search-button").on("click", function(){
     
+    getWeather();
+    var serachedCtiy = $("#city-search").val();
+    localStorage.setItem('Search', serachedCtiy)
 
+    searchHistory();
 
+})
 
-
-
-
-        // === 5 Day forcast cards ===
-
-    // var cardIcon = $("<img id='weather-icon' src='' alt='Weather Icon'>")    
-    // var display5 = $("#display-5day")
-    // var cardEl = $("<div class='card' style='width:13rem;'>")
-    // var cardCity = $("<h5 id='card-title' class='card-title'>")    
-    // var cardTemp = $("<p id='card-temp' class='card-text'>")
-    // var cardWind = $("<p id='card-wind' class='card-text'>")
-    // var cardHumid =$("<p id='card-humid' class='card-text'>")
-    // var cardBody = $("<div id='card-body' class='card-body'>")
-    // var dataIcon = data.weather[0].icon
-    // var iconUrl = "http://openweathermap.org/img/wn/"+dataIcon+".png"
-
-    // cardIcon.attr('src', iconUrl)
-    // cardBody.append(cardIcon)
-
-    // cardCity.text(data.name)
-    // cardBody.append(cardCity)
-
-    // cardBody.append(cardIcon)
-
-    // cardTemp.text("Temp: "+data.main.temp)
-    // cardBody.append(cardTemp)
-
-    // cardHumid.text("Humidity: "+data.main.humidity)
-    // cardBody.append(cardHumid)
-
-    // cardWind.text("Wind: "+data.wind.speed)
-    // cardBody.append(cardWind)    
-
-    // cardEl.append(cardBody)
-    // display5.append(cardEl) 
-
-    })   
-
-    // var cardEl = $("<div class='card' style='width:13rem;'>")
-    // var cardCity = $("<h5 id='card-title' class='card-title'>")
-    // var cardIcon = $("<div id='card-icon' class='card-subtitle mb-2'>")
-    // var cardTemp = $("<p id='card-temp' class='card-text'>")
-    // var cardWind = $("<p id='card-wind' class='card-text'>")
-    // var cardHumid =$("<p id='card-humid' class='card-text'>")
-    // var cardBody = $("<div id='card-body' class='card-body'>")
-
-    
-
-
+function searchHistory(){
+    var grabCity = localStorage.getItem('Search');
+    var showCity = $("<button id='history-btn type='button' class='custom-history-btn btn btn-block btn-light'>").text(grabCity)
+    $("#searched").append(showCity)
 }
 
-$("#search-button").on("click", getWeather)
+$("#history-btn").on('click', function(event){
+    getWeather(event)
+})

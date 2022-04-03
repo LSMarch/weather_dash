@@ -1,3 +1,7 @@
+.custom-jumbo{
+    background-color: lightskyblue;
+}
+
 .low{
     background-color: green;
     color: black;
@@ -10,4 +14,20 @@
 
 .high{
     background-color: red;
+}
+
+.custom-display {
+    margin-botom: 50px;
+}
+
+.custom-card{
+    background-color: palegreen;
+}
+
+.custom-history-btn {
+    background-color: lightskyblue;
+}
+
+.custom-display{
+    background-image: linear-gradient(lightskyblue,palegreen)
 }
