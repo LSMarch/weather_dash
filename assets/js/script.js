@@ -14,51 +14,59 @@ function getWeather() {
     .then(function(response){
         return response.json();
     })
+
     .then(function(data){
         
-
+//console.log(data)
         //=== Formating date ===
 
     var now = moment(dataDate).format('MM/DD/YYYY')
     var dataDate = data.dt;
-        console.log(now)
-    
+        console.log(now)  
 
         // === Main display ===
     
     var displayEl = $("#display-weather-info")
-    var cityEl = $("<h1 id='big-city'>")   
+    var cityEl = $("<h1 id='big-city'>")  
+    var displayIcon = $("<img id='display-icon' src='' alt=''>")
+    var iconAlt = data.weather[0].description
+    var displayIconUrl = "http://openweathermap.org/img/wn/" +currentIcon + ".png"
+    var currentIcon = data.weather[0].icon 
     var lat = data.coord.lat
     var lon = data.coord.lon
     var oneCallURL = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIkey
     cityEl.text(data.name)
     displayEl.append(cityEl)
+    displayIcon.attr('src', displayIconUrl)
+     displayIcon.attr('alt', iconAlt)
+     cityEl.append(displayIcon)
+     console.log(data.weather[0].icon)
 
     fetch(oneCallURL)
     .then(function(response){
         return response.json();
     })
     .then(function(data){
-        console.log(data)
+        //console.log(data)
 
     var dateEl = $("<h3<span id='current-date' 'd-inline>>")
     var displayTemp = $("<p id='display-temp'>")
     var displayWind = $("<p id='display-wind'>")
     var displayHumid = $("<p id='display-humid'>")
     var displayUvi = $("<span id='display-uvi'>")
-    var displayIcon = $("<img id='display-icon' src='' alt=''>")
-    var displayIconUrl = "http://openweathermap.org/img/wn/"+currentIcon+".png"
-    var currentIcon = data.current.weather[0].icon
-    var iconAlt = data.current.weather[0].description
+    // var displayIcon = $("<img id='display-icon' src='' alt=''>")
+    // var displayIconUrl = "http://openweathermap.org/img/wn/"+currentIcon+".png"
+    // var currentIcon = data.weather[0].icon
+    // var iconAlt = data.current.weather[0].description
     var uvIndex = data.current.uvi
 
     displayEl.addClass('custom-display')
     dateEl.text(" " +now)
     cityEl.append(dateEl)
 
-    displayIcon.attr('src', displayIconUrl)
-    //displayIcon.attr('alt', iconAlt)
-    cityEl.append(displayIcon)    
+    // displayIcon.attr('src', displayIconUrl)
+    // //displayIcon.attr('alt', iconAlt)
+    // cityEl.append(displayIcon)    
 
     displayTemp.text("Temp: "+data.current.temp + " F")
     displayEl.append(displayTemp)
@@ -69,18 +77,25 @@ function getWeather() {
     displayHumid.text("Humidity: "+data.current.humidity + "%")
     displayEl.append(displayHumid)
 
-    if( 0 < uvIndex < 3){
-        displayUvi.attr("class","low")
-    } else if (3 < uvIndex < 5){
-        displayUvi.attr('class', 'moderate')
-    } else if(5 < uvIndex) {
-        displayUvi.attr('class', 'high')
-    }    
+    if(uvIndex <= 3){
+        displayUvi.addClass('low')
+        displayUvi.removeClass('moderate')
+        displayUvi.removeClass('high')
+    } else if (uvIndex <= 5){
+        displayUvi.removeClass('low')
+        displayUvi.addClass('moderate')
+        displayUvi.removeClass('high')
+    } else {
+        displayUvi.removeClass('low')
+        displayUvi.removeClass('moderate')
+        displayUvi.addClass('high')
+    } 
 
     displayUvi.text("UV Index: "+ uvIndex)
     displayEl.append(displayUvi)
 
-    for(var i=0; i< 5; i++) {
+    for(var i=1; i < data.daily.length; i++) {
+        if(i===6){ break }
 
     // === Display 5 Day Forcast === 
     var cardIcon = $("<img id='weather-icon' src='' alt='Weather Icon'>")    
@@ -94,13 +109,20 @@ function getWeather() {
     var dataIcon = data.daily[i].weather[0].icon
     var iconUrl = "http://openweathermap.org/img/wn/"+dataIcon+".png"
 
-    var dailyDate = data.daily[i].dt
-    var Date = moment(dailyDate).format("MM/DD/YYYY")
+    //console.log(data)   
+
+    
+    var futureDate = new Date(data.daily[i].dt*1000).toLocaleDateString("en-US")
+    //1649091600
+    //futureDate[@@toPrimitive]('string')
+    //var then = Date.now(futureDate)
+    console.log(futureDate)
+    
 
     cardIcon.attr('src', iconUrl)
     cardBody.append(cardIcon)
 
-    cardDate.text(Date)
+    cardDate.text(futureDate)
     cardBody.append(cardDate)
 
     cardBody.append(cardIcon)
