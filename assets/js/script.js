@@ -1,9 +1,11 @@
 console.log('work')
+// var displayEl = $("#display-info")
 
 // var term = $("#city-search").val();
 // var search = $("#searched")
 
 function getWeather() {
+     //searchedCity.textContent=""
     var APIkey = "58e0ffc4029d6627d5281bd568bd2b8b"
     var city = $("#city-search").val();
     //var state = $("#state-search").val();
@@ -26,7 +28,7 @@ function getWeather() {
 
         // === Main display ===
     
-    var displayEl = $("#display-weather-info")
+    var displayEl = $("#display-info")
     var cityEl = $("<h1 id='big-city'>")  
     var displayIcon = $("<img id='display-icon' src='' alt=''>")
     var iconAlt = data.weather[0].description
@@ -98,6 +100,7 @@ function getWeather() {
         if(i===6){ break }
 
     // === Display 5 Day Forcast === 
+    
     var cardIcon = $("<img id='weather-icon' src='' alt='Weather Icon'>")    
     var display5 = $("#display-5day")
     var cardEl = $("<div class='card m-2 custom-card' style='width:13rem;'>")
@@ -116,7 +119,7 @@ function getWeather() {
     //1649091600
     //futureDate[@@toPrimitive]('string')
     //var then = Date.now(futureDate)
-    console.log(futureDate)
+    //console.log(futureDate)
     
 
     cardIcon.attr('src', iconUrl)
@@ -138,6 +141,7 @@ function getWeather() {
 
     cardEl.append(cardBody)
     display5.append(cardEl) 
+    $("#forcast").append(display5)
 } //end for-loop
 
 }) // end oneCallURL       
@@ -147,22 +151,52 @@ function getWeather() {
 } // end getWeather()
 
 
-$("#search-button").on("click", function(){
-    
-    getWeather();
-    var serachedCtiy = $("#city-search").val();
-    localStorage.setItem('Search', serachedCtiy)
-
-    searchHistory();
-
+$("#search-button").on("click", function(event){
+    //event.preventDefault
+    getWeather(event);
+    searchedCtiy = $("#city-search").val();
+    localStorage.setItem('Search', $("#city-search").val())
+    storedCitiesArr.push( $("#city-search").val())
+    $("#city-search").val(" ")
+    storeCities()
+    searchHistory();       
 })
 
-function searchHistory(){
-    var grabCity = localStorage.getItem('Search');
-    var showCity = $("<button id='history-btn type='button' class='custom-history-btn btn btn-block btn-light'>").text(grabCity)
-    $("#searched").append(showCity)
-}
+
 
 $("#history-btn").on('click', function(event){
     getWeather(event)
+ })
+
+function searchHistory(){
+    localStorage.getItem('Search');
+    showCity = $("<button id='history-btn type='button' class='custom-history-btn btn btn-block btn-light'>").text(localStorage.getItem('Search'))
+    $("#searched").append(showCity)
+}
+// // stores searched cities
+function storeCities (){
+    localStorage.setItem('Search', searchedCtiy)
+}
+//console.log(storedCitiesArr[0])
+ var storedCitiesArr = []
+var searchedCtiy 
+var showCity = $("<button id='history-btn type='button' class='custom-history-btn btn btn-block btn-light'>").text(localStorage.getItem('Search'))
+
+// // event listener on search history list thing
+$("#searched").on('click',function(event) {
+
+var element = event.target
+
+if(element.matches("button")===true){
+    getWeather()
+    storeCities()
+}
+
 })
+
+// // runs on load
+function init(){
+    displaySearched = localStorage.getItem('Search')  
+}
+
+init()
